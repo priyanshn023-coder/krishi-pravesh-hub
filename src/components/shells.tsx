@@ -1,9 +1,18 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import type { ReactNode } from "react";
-import { Bell, LogOut, Sprout } from "lucide-react";
+import { Bell, Globe2, LogOut, Moon, Sprout, Sun } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useSmartMandi } from "@/store/SmartMandiProvider";
 import { Badge } from "./ui-kit";
+import { Button } from "./ui-kit";
+import { usePreferences } from "./preferences";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "./ui/select";
 
 export function DemoModeStrip() {
   return (
@@ -21,7 +30,7 @@ export function Brand({ compact = false }: { compact?: boolean }) {
       </span>
       {!compact && (
         <span className="leading-tight">
-          <span className="block text-lg font-extrabold text-foreground">SmartMandi</span>
+          <span className="block text-lg font-extrabold text-foreground">KrishiPravesh</span>
           <span className="block text-[11px] font-semibold tracking-wide text-muted-foreground uppercase">
             Farmer coordination platform
           </span>
@@ -37,6 +46,39 @@ export interface NavItem {
   icon: ReactNode;
 }
 
+export function PreferenceControls({ compact = false }: { compact?: boolean }) {
+  const { language, setLanguage, theme, toggleTheme, t } = usePreferences();
+
+  return (
+    <div className="flex items-center gap-2">
+      <Select value={language} onValueChange={(value) => setLanguage(value as "en" | "hi")}>
+        <SelectTrigger
+          className={cn("h-10 border-border bg-surface-strong shadow-none", compact ? "w-12 px-3" : "w-28")}
+          aria-label={t("Select language", "भाषा चुनें")}
+        >
+          <Globe2 className="size-4 shrink-0" />
+          {!compact ? <SelectValue /> : null}
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="en">English</SelectItem>
+          <SelectItem value="hi">हिन्दी</SelectItem>
+        </SelectContent>
+      </Select>
+      <Button
+        type="button"
+        variant="quiet"
+        size="sm"
+        className="size-10 px-0"
+        onClick={toggleTheme}
+        aria-label={theme === "light" ? t("Use dark mode", "डार्क मोड") : t("Use light mode", "लाइट मोड")}
+        title={theme === "light" ? t("Dark mode", "डार्क मोड") : t("Light mode", "लाइट मोड")}
+      >
+        {theme === "light" ? <Moon className="size-4" /> : <Sun className="size-4" />}
+      </Button>
+    </div>
+  );
+}
+
 /** Mobile-first farmer shell: big header + thumb-friendly bottom bar. */
 export function FarmerShell({
   children,
@@ -48,6 +90,7 @@ export function FarmerShell({
   title: string;
 }) {
   const { state, logout } = useSmartMandi();
+  const { t } = usePreferences();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const unread = state.notifications.filter(
     (n) => n.recipient_role === "farmer" && !n.read,
@@ -60,6 +103,7 @@ export function FarmerShell({
         <div className="mx-auto flex max-w-5xl items-center justify-between gap-3 px-4 py-3">
           <Brand />
           <div className="flex items-center gap-2">
+            <PreferenceControls compact />
             <Link
               to="/farmer/notifications"
               className="relative grid size-11 place-items-center rounded-2xl bg-surface-strong text-foreground"
@@ -72,13 +116,15 @@ export function FarmerShell({
                 </span>
               )}
             </Link>
-            <button
+            <Button
               onClick={logout}
-              className="grid size-11 place-items-center rounded-2xl bg-surface-strong text-foreground"
-              aria-label="Sign out"
+              variant="quiet"
+              size="sm"
+              className="size-11 px-0"
+              aria-label={t("Sign out", "साइन आउट")}
             >
               <LogOut className="size-5" />
-            </button>
+            </Button>
           </div>
         </div>
       </header>
@@ -127,6 +173,7 @@ export function AuthorityShell({
   centreName: string;
 }) {
   const { logout } = useSmartMandi();
+  const { t } = usePreferences();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
   return (
@@ -136,13 +183,15 @@ export function AuthorityShell({
         <aside className="no-print border-b border-border bg-card lg:w-72 lg:shrink-0 lg:border-r lg:border-b-0">
           <div className="flex items-center justify-between gap-3 px-4 py-4">
             <Brand />
-            <button
+            <Button
               onClick={logout}
-              className="grid size-10 place-items-center rounded-xl bg-surface-strong lg:hidden"
-              aria-label="Sign out"
+              variant="quiet"
+              size="sm"
+              className="size-10 px-0 lg:hidden"
+              aria-label={t("Sign out", "साइन आउट")}
             >
               <LogOut className="size-4" />
-            </button>
+            </Button>
           </div>
           <div className="px-4 pb-3">
             <Badge tone="primary">Authority · {centreName}</Badge>
@@ -170,13 +219,20 @@ export function AuthorityShell({
               );
             })}
           </nav>
+          <div className="border-t border-border px-4 py-4">
+            <p className="mb-2 text-xs font-bold tracking-wide text-muted-foreground uppercase">
+              {t("Preferences", "प्राथमिकताएं")}
+            </p>
+            <PreferenceControls />
+          </div>
           <div className="no-print hidden px-4 py-4 lg:block">
-            <button
+            <Button
               onClick={logout}
-              className="flex w-full items-center gap-2 rounded-xl bg-surface-strong px-3 py-2.5 text-sm font-semibold"
+              variant="quiet"
+              className="w-full justify-start"
             >
-              <LogOut className="size-4" /> Sign out
-            </button>
+              <LogOut className="size-4" /> {t("Sign out", "साइन आउट")}
+            </Button>
           </div>
         </aside>
         <main className="flex-1 px-4 py-6 lg:px-8">{children}</main>

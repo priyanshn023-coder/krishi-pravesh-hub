@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Activity, IndianRupee, LayoutDashboard, Timer, Users } from "lucide-react";
+import { Activity, ArrowUpRight, IndianRupee, LayoutDashboard, Timer, Users } from "lucide-react";
 import {
   Bar,
   BarChart,
@@ -13,13 +13,25 @@ import { Badge, Button, Card, Notice, SectionTitle, Stat } from "@/components/ui
 import { useAuthorityCentre, useSmartMandi } from "@/store/SmartMandiProvider";
 import { predictFor, queueForCentre } from "@/lib/queue";
 import { BOOKING_STATUS_LABEL, minutesLabel, rupees, timeOf } from "@/lib/format";
+import { usePreferences } from "@/components/preferences";
 
 export const Route = createFileRoute("/authority/")({
+  head: () => ({
+    meta: [
+      { title: "Authority dashboard — KrishiPravesh" },
+      { name: "description", content: "Monitor centre arrivals, queues, slots and procurement progress." },
+      { property: "og:title", content: "Authority dashboard — KrishiPravesh" },
+      { property: "og:description", content: "A clear operational view of arrivals, queues and centre capacity." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
   component: AuthorityDashboard,
 });
 
 function AuthorityDashboard() {
   const { state, farmerNameFor } = useSmartMandi();
+  const { t } = usePreferences();
   const centre = useAuthorityCentre();
 
   const centreBookings = state.bookings.filter((b) => b.centre_id === centre.id);
@@ -39,35 +51,35 @@ function AuthorityDashboard() {
     <div className="space-y-6">
       <SectionTitle
         icon={<LayoutDashboard className="size-5" />}
-        title={centre.name}
-        subtitle={`${centre.city}, ${centre.district} · ${centre.active_counters} counters open`}
+        title={t("Operations overview", "संचालन अवलोकन")}
+        subtitle={`${centre.name} · ${centre.city}, ${centre.district} · ${centre.active_counters} ${t("counters open", "काउंटर खुले")}`}
         action={<Badge tone={centre.is_operating ? "success" : "danger"}>
-          {centre.is_operating ? "Operating" : "Closed"}
+          {centre.is_operating ? t("Operating", "संचालित") : t("Closed", "बंद")}
         </Badge>}
       />
 
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <Stat
-          label="Farmers waiting"
+          label={t("Farmers waiting", "प्रतीक्षारत किसान")}
           value={queue.length}
           tone="primary"
           icon={<Users className="size-4" />}
         />
         <Stat
-          label="Estimated wait"
+          label={t("Estimated wait", "अनुमानित प्रतीक्षा")}
           value={minutesLabel(prediction.prediction_minutes)}
-          hint={`Next turn near ${timeOf(prediction.predicted_turn_time)}`}
+          hint={`${t("Next turn near", "अगली बारी लगभग")} ${timeOf(prediction.predicted_turn_time)}`}
           tone="wheat"
           icon={<Timer className="size-4" />}
         />
         <Stat
-          label="Completed today"
+          label={t("Completed today", "आज पूर्ण")}
           value={completed}
           tone="success"
           icon={<Activity className="size-4" />}
         />
         <Stat
-          label="Demo payments made"
+          label={t("Demo payments made", "डेमो भुगतान")}
           value={rupees(paidAmount)}
           icon={<IndianRupee className="size-4" />}
         />
@@ -75,9 +87,9 @@ function AuthorityDashboard() {
 
       <div className="grid gap-4 lg:grid-cols-5">
         <Card className="lg:col-span-3">
-          <h3 className="text-lg font-bold">Arrivals through the day</h3>
+           <h3 className="text-lg font-bold">{t("Arrivals through the day", "दिनभर की आवक")}</h3>
           <p className="text-sm text-muted-foreground">
-            Based on the bookings currently in the queue.
+             {t("Based on the bookings currently in the queue.", "वर्तमान कतार की बुकिंग पर आधारित।")}
           </p>
           <div className="mt-4 h-64">
             <ResponsiveContainer width="100%" height="100%">
@@ -100,10 +112,10 @@ function AuthorityDashboard() {
 
         <Card className="lg:col-span-2">
           <div className="flex items-center justify-between">
-            <h3 className="text-lg font-bold">Next farmers</h3>
+             <h3 className="text-lg font-bold">{t("Next farmers", "अगले किसान")}</h3>
             <Link to="/authority/queue">
               <Button variant="quiet" size="sm">
-                Open queue
+                 {t("Open queue", "कतार खोलें")} <ArrowUpRight className="size-4" />
               </Button>
             </Link>
           </div>
@@ -129,16 +141,18 @@ function AuthorityDashboard() {
             ))}
             {queue.length === 0 ? (
               <li className="rounded-xl bg-surface-strong px-3 py-6 text-center text-sm text-muted-foreground">
-                No farmers in the queue right now.
+                 {t("No farmers in the queue right now.", "अभी कतार में कोई किसान नहीं है।")}
               </li>
             ) : null}
           </ul>
         </Card>
       </div>
 
-      <Notice tone="demo" title="Demo data">
-        All figures come from sample data stored in this browser. Connecting a database and
-        automation service later will replace this data without changing these screens.
+      <Notice tone="demo" title={t("Demo data", "डेमो डेटा")}>
+        {t(
+          "All figures use sample data stored in this browser.",
+          "सभी आंकड़े इस ब्राउज़र में रखे नमूना डेटा से हैं।",
+        )}
       </Notice>
     </div>
   );

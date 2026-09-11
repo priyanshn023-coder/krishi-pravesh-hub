@@ -13,18 +13,18 @@ import {
   Truck,
 } from "lucide-react";
 import { Badge, Button, Card } from "@/components/ui-kit";
-import { DemoModeStrip } from "@/components/shells";
+import { DemoModeStrip, PreferenceControls } from "@/components/shells";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "SmartMandi — Book your mandi slot, skip the long line" },
+      { title: "KrishiPravesh — Book your mandi slot, skip the long line" },
       {
         name: "description",
         content:
-          "SmartMandi helps wheat farmers pick the right procurement centre, book a time slot, get a token and QR, and follow gate entry, queue, assessment and payment in one place.",
+          "KrishiPravesh helps wheat farmers pick the right procurement centre, book a time slot, get a token and QR, and follow gate entry, queue, assessment and payment in one place.",
       },
-      { property: "og:title", content: "SmartMandi — Book your mandi slot, skip the long line" },
+      { property: "og:title", content: "KrishiPravesh — Book your mandi slot, skip the long line" },
       {
         property: "og:description",
         content:
@@ -76,13 +76,15 @@ function Landing() {
             <Sprout className="size-6" />
           </span>
           <span className="leading-tight">
-            <span className="block text-xl font-extrabold">SmartMandi</span>
+            <span className="block text-xl font-extrabold">KrishiPravesh</span>
             <span className="block text-[11px] font-semibold tracking-wide text-muted-foreground uppercase">
               Wheat procurement coordination
             </span>
           </span>
         </div>
-        <nav className="hidden items-center gap-1 sm:flex">
+        <nav className="flex items-center gap-1">
+          <PreferenceControls compact />
+          <div className="hidden items-center gap-1 sm:flex">
           <Link
             to="/how-it-works"
             className="rounded-xl px-3 py-2 text-sm font-semibold text-muted-foreground hover:bg-surface-strong"
@@ -95,6 +97,7 @@ function Landing() {
           >
             Technology
           </Link>
+          </div>
         </nav>
       </header>
 
@@ -109,7 +112,7 @@ function Landing() {
                 at the mandi gate.
               </h1>
               <p className="mt-4 max-w-lg text-lg text-muted-foreground">
-                SmartMandi tells you which centre to go to, books your time, gives you a
+                 KrishiPravesh tells you which centre to go to, books your time, gives you a
                 token, and shows your turn as it moves — in simple words, on your phone.
               </p>
 

@@ -15,13 +15,13 @@ export const Route = createFileRoute("/login")({
   }),
   head: () => ({
     meta: [
-      { title: "Sign in — SmartMandi" },
+      { title: "Sign in — KrishiPravesh" },
       {
         name: "description",
         content:
-          "Sign in to SmartMandi with your mobile number as a farmer or as procurement centre staff.",
+          "Sign in to KrishiPravesh with your mobile number as a farmer or as procurement centre staff.",
       },
-      { property: "og:title", content: "Sign in — SmartMandi" },
+      { property: "og:title", content: "Sign in — KrishiPravesh" },
       { property: "og:description", content: "Mobile sign-in for farmers and centre staff." },
     ],
   }),
@@ -80,7 +80,7 @@ function LoginPage() {
           <ArrowLeft className="size-4" /> Back
         </Link>
 
-        <h1 className="text-3xl font-extrabold">Sign in to SmartMandi</h1>
+        <h1 className="text-3xl font-extrabold">Sign in to KrishiPravesh</h1>
         <p className="mt-1 text-muted-foreground">Use your mobile number.</p>
 
         <div className="mt-5 grid grid-cols-2 gap-3">

@@ -12,6 +12,7 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { SmartMandiProvider } from "@/store/SmartMandiProvider";
+import { PreferencesProvider } from "@/components/preferences";
 
 function NotFoundComponent() {
   return (
@@ -78,13 +79,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "SmartMandi — Smart wheat procurement for farmers" },
+      { title: "KrishiPravesh — Smart wheat procurement for farmers" },
       {
         name: "description",
         content:
-          "SmartMandi helps farmers find a procurement centre, book a slot, get a token and track queue, assessment and payment.",
+          "KrishiPravesh helps farmers find a procurement centre, book a slot, get a token and track queue, assessment and payment.",
       },
-      { property: "og:title", content: "SmartMandi — Smart wheat procurement for farmers" },
+      { property: "og:title", content: "KrishiPravesh — Smart wheat procurement for farmers" },
       {
         property: "og:description",
         content:
@@ -132,10 +133,12 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <SmartMandiProvider>
-        {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-        <Outlet />
-      </SmartMandiProvider>
+      <PreferencesProvider>
+        <SmartMandiProvider>
+          {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+          <Outlet />
+        </SmartMandiProvider>
+      </PreferencesProvider>
     </QueryClientProvider>
   );
 }

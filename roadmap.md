@@ -1,4 +1,4 @@
-# SmartMandi roadmap
+# KrishiPravesh roadmap
 
 - [x] Domain types (Supabase table contract)
 - [ ] Service adapters (supabase, aiVision, voice, queuePrediction, rfid, payment, notification, n8n)
@@ -9,3 +9,4 @@
 - [ ] Architecture + technology pages
 - [ ] Printable records
 - [ ] Farmer-friendly UI pass: icon-led navigation, big touch targets, plain language (user request)
+- [x] KrishiPravesh branding, theme control, language selector and Authority dashboard
