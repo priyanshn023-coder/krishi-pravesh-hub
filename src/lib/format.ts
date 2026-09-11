@@ -1,4 +1,5 @@
 import type { BookingStatus, PaymentStatus } from "@/types/domain";
+import type { Language } from "@/components/preferences";
 
 export function rupees(n: number): string {
   return `₹${n.toLocaleString("en-IN")}`;
@@ -52,6 +53,20 @@ export const BOOKING_STATUS_LABEL: Record<BookingStatus, string> = {
   no_show: "Did not arrive",
 };
 
+export const BOOKING_STATUS_LABEL_HI: Record<BookingStatus, string> = {
+  booked: "स्लॉट बुक हुआ",
+  arrived: "गेट पर पहुंचे",
+  waiting: "कतार में प्रतीक्षारत",
+  processing: "प्रक्रिया जारी",
+  assessed: "गुणवत्ता जांची गई",
+  procured: "खरीद पूर्ण",
+  payment_initiated: "भुगतान शुरू",
+  payment_processing: "भुगतान प्रक्रिया में",
+  payment_completed: "भुगतान पूर्ण",
+  cancelled: "रद्द",
+  no_show: "नहीं पहुंचे",
+};
+
 export const BOOKING_STATUS_TONE: Record<
   BookingStatus,
   "neutral" | "primary" | "wheat" | "success" | "danger" | "info"
@@ -76,3 +91,21 @@ export const PAYMENT_STATUS_LABEL: Record<PaymentStatus, string> = {
   completed: "Completed",
   failed: "Failed",
 };
+
+export const PAYMENT_STATUS_LABEL_HI: Record<PaymentStatus, string> = {
+  not_started: "शुरू नहीं हुआ",
+  initiated: "शुरू किया गया",
+  processing: "प्रक्रिया में",
+  completed: "पूर्ण",
+  failed: "असफल",
+};
+
+/** Returns the label for a status key using the given map, Hindi map and language. */
+export function statusLabel<K extends string>(
+  map: Record<K, string>,
+  mapHi: Record<K, string>,
+  key: K,
+  language: Language,
+): string {
+  return language === "hi" ? mapHi[key] : map[key];
+}

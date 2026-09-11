@@ -13,26 +13,28 @@ import {
   type VoiceContext,
 } from "@/services";
 import { cn } from "@/lib/utils";
+import { usePreferences } from "@/components/preferences";
 
 export const Route = createFileRoute("/farmer/voice")({
   component: VoiceAssistant,
 });
 
-const SUGGESTIONS = [
-  "What is my token number?",
-  "When should I reach?",
-  "What is my waiting time?",
-  "What is my payment status?",
-  "What is the wheat rate?",
-  "What happens after gate entry?",
-];
-
 type Phase = "idle" | "listening" | "thinking" | "speaking" | "error";
 
 function VoiceAssistant() {
+  const { t } = usePreferences();
   const { state } = useSmartMandi();
   const booking = useMyBooking();
   const recognitionRef = useRef<SpeechRecognitionLike | null>(null);
+
+  const SUGGESTIONS = [
+    t("What is my token number?", "मेरा टोकन नंबर क्या है?"),
+    t("When should I reach?", "मुझे कब पहुंचना चाहिए?"),
+    t("What is my waiting time?", "मेरा प्रतीक्षा समय क्या है?"),
+    t("What is my payment status?", "मेरे भुगतान की स्थिति क्या है?"),
+    t("What is the wheat rate?", "गेहूं का भाव क्या है?"),
+    t("What happens after gate entry?", "गेट पर प्रवेश के बाद क्या होता है?"),
+  ];
 
   const [phase, setPhase] = useState<Phase>("idle");
   const [transcript, setTranscript] = useState("");
@@ -79,7 +81,10 @@ function VoiceAssistant() {
     const Ctor = getSpeechRecognitionCtor();
     if (!Ctor) {
       setError(
-        "This browser cannot listen to the microphone. Please tap one of the questions below instead.",
+        t(
+          "This browser cannot listen to the microphone. Please tap one of the questions below instead.",
+          "यह ब्राउज़र माइक्रोफ़ोन नहीं सुन सकता। कृपया नीचे दिए गए किसी प्रश्न पर टैप करें।",
+        ),
       );
       setPhase("error");
       return;
@@ -94,7 +99,7 @@ function VoiceAssistant() {
       if (said) respond(said);
     };
     rec.onerror = () => {
-      setError("I could not hear you. Please try again or tap a question.");
+      setError(t("I could not hear you. Please try again or tap a question.", "मैं आपको सुन नहीं पाया। कृपया फिर से प्रयास करें या किसी प्रश्न पर टैप करें।"));
       setPhase("error");
     };
     rec.onend = () => {
@@ -114,8 +119,11 @@ function VoiceAssistant() {
     <div className="space-y-5">
       <SectionTitle
         icon={<Mic className="size-5" />}
-        title="Voice assistant"
-        subtitle="Ask about your token, timing, waiting time, rate or payment."
+        title={t("Voice assistant", "आवाज़ सहायक")}
+        subtitle={t(
+          "Ask about your token, timing, waiting time, rate or payment.",
+          "अपने टोकन, समय, प्रतीक्षा समय, भाव या भुगतान के बारे में पूछें।",
+        )}
       />
 
       <Card className="text-center">
@@ -129,7 +137,7 @@ function VoiceAssistant() {
                 ? "wheat-gradient text-accent-foreground"
                 : "field-gradient",
           )}
-          aria-label={phase === "listening" ? "Stop listening" : "Start listening"}
+          aria-label={phase === "listening" ? t("Stop listening", "सुनना बंद करें") : t("Start listening", "सुनना शुरू करें")}
         >
           {phase === "listening" ? (
             <MicOff className="size-12" />
@@ -141,16 +149,16 @@ function VoiceAssistant() {
         </button>
         <p className="mt-4 text-lg font-bold">
           {phase === "listening"
-            ? "Listening…"
+            ? t("Listening…", "सुन रहा है…")
             : phase === "thinking"
-              ? "Thinking…"
+              ? t("Thinking…", "सोच रहा है…")
               : phase === "speaking"
-                ? "Speaking…"
-                : "Tap the microphone and ask"}
+                ? t("Speaking…", "बोल रहा है…")
+                : t("Tap the microphone and ask", "माइक्रोफ़ोन पर टैप करें और पूछें")}
         </p>
         {phase === "speaking" ? (
           <Button variant="quiet" className="mt-3" onClick={stopAll}>
-            <VolumeX className="size-4" /> Stop speaking
+            <VolumeX className="size-4" /> {t("Stop speaking", "बोलना बंद करें")}
           </Button>
         ) : null}
         {error ? <p className="mt-3 font-semibold text-destructive">{error}</p> : null}
@@ -158,15 +166,15 @@ function VoiceAssistant() {
 
       {transcript ? (
         <Card>
-          <p className="text-sm font-bold text-muted-foreground uppercase">You asked</p>
+          <p className="text-sm font-bold text-muted-foreground uppercase">{t("You asked", "आपने पूछा")}</p>
           <p className="text-lg font-semibold">{transcript}</p>
-          <p className="mt-4 text-sm font-bold text-muted-foreground uppercase">SmartMandi says</p>
+          <p className="mt-4 text-sm font-bold text-muted-foreground uppercase">{t("SmartMandi says", "स्मार्टमंडी कहता है")}</p>
           <p className="text-lg">{answer}</p>
         </Card>
       ) : null}
 
       <Card>
-        <h3 className="text-lg font-bold">Or tap a question</h3>
+        <h3 className="text-lg font-bold">{t("Or tap a question", "या एक प्रश्न पर टैप करें")}</h3>
         <div className="mt-3 flex flex-wrap gap-2">
           {SUGGESTIONS.map((q) => (
             <button
@@ -184,22 +192,27 @@ function VoiceAssistant() {
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <h3 className="flex items-center gap-2 text-lg font-bold">
-              <PhoneCall className="size-5 text-primary" /> Phone voice assistant
+              <PhoneCall className="size-5 text-primary" /> {t("Phone voice assistant", "फ़ोन आवाज़ सहायक")}
             </h3>
             <p className="text-sm text-muted-foreground">
-              Planned: ask the same questions from any basic phone call.
+              {t(
+                "Planned: ask the same questions from any basic phone call.",
+                "योजना: किसी भी सामान्य फ़ोन कॉल से वही प्रश्न पूछें।",
+              )}
             </p>
           </div>
           <Link to="/farmer/phone-assistant">
-            <Button variant="outline">See the plan</Button>
+            <Button variant="outline">{t("See the plan", "योजना देखें")}</Button>
           </Link>
         </div>
       </Card>
 
       <Notice tone="demo">
-        <Badge tone="wheat">Demo</Badge> Answers are built from your SmartMandi booking data
-        in this browser. Speech recognition and speaking use your browser. An external
-        AI/voice service can be connected later without changing this screen.
+        <Badge tone="wheat">{t("Demo", "डेमो")}</Badge>{" "}
+        {t(
+          "Answers are built from your SmartMandi booking data in this browser. Speech recognition and speaking use your browser. An external AI/voice service can be connected later without changing this screen.",
+          "उत्तर इस ब्राउज़र में आपके स्मार्टमंडी बुकिंग डेटा से बनाए जाते हैं। वाणी पहचान और बोलना आपके ब्राउज़र का उपयोग करते हैं। बाहरी AI/आवाज़ सेवा को बाद में इस स्क्रीन को बदले बिना जोड़ा जा सकता है।",
+        )}
       </Notice>
     </div>
   );

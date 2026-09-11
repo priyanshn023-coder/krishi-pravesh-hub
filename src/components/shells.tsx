@@ -1,11 +1,11 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import type { ReactNode } from "react";
-import { Bell, Globe2, LogOut, Moon, Sprout, Sun } from "lucide-react";
+import { Bell, Globe2, LogOut, Moon, Palette, Sun } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useSmartMandi } from "@/store/SmartMandiProvider";
 import { Badge } from "./ui-kit";
 import { Button } from "./ui-kit";
-import { usePreferences } from "./preferences";
+import { COLOR_THEMES, usePreferences, type ColorTheme, type Language } from "./preferences";
 import {
   Select,
   SelectContent,
@@ -13,26 +13,37 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
+import logoAsset from "@/assets/krishipravesh-logo.png.asset.json";
+
+export const LOGO_URL = logoAsset.url;
 
 export function DemoModeStrip() {
+  const { tr } = usePreferences();
   return (
     <div className="no-print bg-accent-soft px-4 py-1.5 text-center text-xs font-bold tracking-wide text-accent-foreground uppercase">
-      Demo mode · sample data only · not official government data
+      {tr("demoStrip")}
     </div>
   );
 }
 
-export function Brand({ compact = false }: { compact?: boolean }) {
+export function Brand({ compact = false, size = "md" }: { compact?: boolean; size?: "md" | "lg" }) {
+  const { tr } = usePreferences();
   return (
     <Link to="/" className="flex items-center gap-2.5">
-      <span className="grid size-10 place-items-center rounded-2xl field-gradient text-primary-foreground">
-        <Sprout className="size-5" />
-      </span>
+      <img
+        src={LOGO_URL}
+        alt={tr("appName")}
+        width={size === "lg" ? 56 : 44}
+        height={size === "lg" ? 56 : 44}
+        className={cn("shrink-0 object-contain", size === "lg" ? "size-14" : "size-11")}
+      />
       {!compact && (
         <span className="leading-tight">
-          <span className="block text-lg font-extrabold text-foreground">KrishiPravesh</span>
+          <span className={cn("block font-extrabold text-foreground", size === "lg" ? "text-xl" : "text-lg")}>
+            {tr("appName")}
+          </span>
           <span className="block text-[11px] font-semibold tracking-wide text-muted-foreground uppercase">
-            Farmer coordination platform
+            {tr("tagline")}
           </span>
         </span>
       )}
@@ -47,11 +58,12 @@ export interface NavItem {
 }
 
 export function PreferenceControls({ compact = false }: { compact?: boolean }) {
-  const { language, setLanguage, theme, toggleTheme, t } = usePreferences();
+  const { language, setLanguage, theme, toggleTheme, colorTheme, setColorTheme, t, tr } =
+    usePreferences();
 
   return (
     <div className="flex items-center gap-2">
-      <Select value={language} onValueChange={(value) => setLanguage(value as "en" | "hi")}>
+      <Select value={language} onValueChange={(value) => setLanguage(value as Language)}>
         <SelectTrigger
           className={cn("h-10 border-border bg-surface-strong shadow-none", compact ? "w-12 px-3" : "w-28")}
           aria-label={t("Select language", "भाषा चुनें")}
@@ -64,14 +76,36 @@ export function PreferenceControls({ compact = false }: { compact?: boolean }) {
           <SelectItem value="hi">हिन्दी</SelectItem>
         </SelectContent>
       </Select>
+      <Select value={colorTheme} onValueChange={(value) => setColorTheme(value as ColorTheme)}>
+        <SelectTrigger
+          className={cn("h-10 border-border bg-surface-strong shadow-none", compact ? "w-12 px-3" : "w-40")}
+          aria-label={tr("colorTheme")}
+        >
+          <Palette className="size-4 shrink-0" />
+          {!compact ? <SelectValue /> : null}
+        </SelectTrigger>
+        <SelectContent>
+          {COLOR_THEMES.map((c) => (
+            <SelectItem key={c.id} value={c.id}>
+              <span className="flex items-center gap-2">
+                <span
+                  className="inline-block size-3.5 rounded-full border border-border"
+                  style={{ background: c.swatch }}
+                />
+                {language === "hi" ? c.hi : c.en}
+              </span>
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
       <Button
         type="button"
         variant="quiet"
         size="sm"
         className="size-10 px-0"
         onClick={toggleTheme}
-        aria-label={theme === "light" ? t("Use dark mode", "डार्क मोड") : t("Use light mode", "लाइट मोड")}
-        title={theme === "light" ? t("Dark mode", "डार्क मोड") : t("Light mode", "लाइट मोड")}
+        aria-label={theme === "light" ? tr("darkMode") : tr("lightMode")}
+        title={theme === "light" ? tr("darkMode") : tr("lightMode")}
       >
         {theme === "light" ? <Moon className="size-4" /> : <Sun className="size-4" />}
       </Button>
@@ -90,7 +124,7 @@ export function FarmerShell({
   title: string;
 }) {
   const { state, logout } = useSmartMandi();
-  const { t } = usePreferences();
+  const { tr } = usePreferences();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const unread = state.notifications.filter(
     (n) => n.recipient_role === "farmer" && !n.read,
@@ -107,7 +141,7 @@ export function FarmerShell({
             <Link
               to="/farmer/notifications"
               className="relative grid size-11 place-items-center rounded-2xl bg-surface-strong text-foreground"
-              aria-label="Notifications"
+              aria-label={tr("notifications")}
             >
               <Bell className="size-5" />
               {unread > 0 && (
@@ -121,7 +155,7 @@ export function FarmerShell({
               variant="quiet"
               size="sm"
               className="size-11 px-0"
-              aria-label={t("Sign out", "साइन आउट")}
+              aria-label={tr("signOut")}
             >
               <LogOut className="size-5" />
             </Button>
@@ -173,7 +207,7 @@ export function AuthorityShell({
   centreName: string;
 }) {
   const { logout } = useSmartMandi();
-  const { t } = usePreferences();
+  const { t, tr } = usePreferences();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
   return (
@@ -188,13 +222,13 @@ export function AuthorityShell({
               variant="quiet"
               size="sm"
               className="size-10 px-0 lg:hidden"
-              aria-label={t("Sign out", "साइन आउट")}
+              aria-label={tr("signOut")}
             >
               <LogOut className="size-4" />
             </Button>
           </div>
           <div className="px-4 pb-3">
-            <Badge tone="primary">Authority · {centreName}</Badge>
+            <Badge tone="primary">{t("Authority", "प्राधिकरण")} · {centreName}</Badge>
           </div>
           <nav className="flex gap-1 overflow-x-auto px-3 pb-3 lg:flex-col lg:overflow-visible">
             {nav.map((item) => {
@@ -221,9 +255,9 @@ export function AuthorityShell({
           </nav>
           <div className="border-t border-border px-4 py-4">
             <p className="mb-2 text-xs font-bold tracking-wide text-muted-foreground uppercase">
-              {t("Preferences", "प्राथमिकताएं")}
+              {tr("preferences")}
             </p>
-            <PreferenceControls />
+            <PreferenceControls compact />
           </div>
           <div className="no-print hidden px-4 py-4 lg:block">
             <Button
@@ -231,7 +265,7 @@ export function AuthorityShell({
               variant="quiet"
               className="w-full justify-start"
             >
-              <LogOut className="size-4" /> {t("Sign out", "साइन आउट")}
+              <LogOut className="size-4" /> {tr("signOut")}
             </Button>
           </div>
         </aside>
