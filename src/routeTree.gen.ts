@@ -10,33 +10,266 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthorityRouteImport } from './routes/authority'
+import { Route as FarmerRouteImport } from './routes/farmer'
+import { Route as HowItWorksRouteImport } from './routes/how-it-works'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as TechnologyRouteImport } from './routes/technology'
+import { Route as AuthorityIndexRouteImport } from './routes/authority.index'
+import { Route as AuthorityQueueRouteImport } from './routes/authority.queue'
+import { Route as AuthoritySlotsRouteImport } from './routes/authority.slots'
+import { Route as FarmerIndexRouteImport } from './routes/farmer.index'
+import { Route as FarmerBookingRouteImport } from './routes/farmer.booking'
+import { Route as FarmerCentresRouteImport } from './routes/farmer.centres'
+import { Route as FarmerCropCheckRouteImport } from './routes/farmer.crop-check'
+import { Route as FarmerNotificationsRouteImport } from './routes/farmer.notifications'
+import { Route as FarmerPaymentRouteImport } from './routes/farmer.payment'
+import { Route as FarmerPhoneAssistantRouteImport } from './routes/farmer.phone-assistant'
+import { Route as FarmerProfileRouteImport } from './routes/farmer.profile'
+import { Route as FarmerRecordsRouteImport } from './routes/farmer.records'
+import { Route as FarmerVoiceRouteImport } from './routes/farmer.voice'
+import { Route as FarmerBookCentreIdRouteImport } from './routes/farmer.book.$centreId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthorityRoute = AuthorityRouteImport.update({
+  id: '/authority',
+  path: '/authority',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FarmerRoute = FarmerRouteImport.update({
+  id: '/farmer',
+  path: '/farmer',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HowItWorksRoute = HowItWorksRouteImport.update({
+  id: '/how-it-works',
+  path: '/how-it-works',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TechnologyRoute = TechnologyRouteImport.update({
+  id: '/technology',
+  path: '/technology',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthorityIndexRoute = AuthorityIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AuthorityRoute,
+} as any)
+const AuthorityQueueRoute = AuthorityQueueRouteImport.update({
+  id: '/queue',
+  path: '/queue',
+  getParentRoute: () => AuthorityRoute,
+} as any)
+const AuthoritySlotsRoute = AuthoritySlotsRouteImport.update({
+  id: '/slots',
+  path: '/slots',
+  getParentRoute: () => AuthorityRoute,
+} as any)
+const FarmerIndexRoute = FarmerIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => FarmerRoute,
+} as any)
+const FarmerBookingRoute = FarmerBookingRouteImport.update({
+  id: '/booking',
+  path: '/booking',
+  getParentRoute: () => FarmerRoute,
+} as any)
+const FarmerCentresRoute = FarmerCentresRouteImport.update({
+  id: '/centres',
+  path: '/centres',
+  getParentRoute: () => FarmerRoute,
+} as any)
+const FarmerCropCheckRoute = FarmerCropCheckRouteImport.update({
+  id: '/crop-check',
+  path: '/crop-check',
+  getParentRoute: () => FarmerRoute,
+} as any)
+const FarmerNotificationsRoute = FarmerNotificationsRouteImport.update({
+  id: '/notifications',
+  path: '/notifications',
+  getParentRoute: () => FarmerRoute,
+} as any)
+const FarmerPaymentRoute = FarmerPaymentRouteImport.update({
+  id: '/payment',
+  path: '/payment',
+  getParentRoute: () => FarmerRoute,
+} as any)
+const FarmerPhoneAssistantRoute = FarmerPhoneAssistantRouteImport.update({
+  id: '/phone-assistant',
+  path: '/phone-assistant',
+  getParentRoute: () => FarmerRoute,
+} as any)
+const FarmerProfileRoute = FarmerProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => FarmerRoute,
+} as any)
+const FarmerRecordsRoute = FarmerRecordsRouteImport.update({
+  id: '/records',
+  path: '/records',
+  getParentRoute: () => FarmerRoute,
+} as any)
+const FarmerVoiceRoute = FarmerVoiceRouteImport.update({
+  id: '/voice',
+  path: '/voice',
+  getParentRoute: () => FarmerRoute,
+} as any)
+const FarmerBookCentreIdRoute = FarmerBookCentreIdRouteImport.update({
+  id: '/book/$centreId',
+  path: '/book/$centreId',
+  getParentRoute: () => FarmerRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/authority': typeof AuthorityRouteWithChildren
+  '/farmer': typeof FarmerRouteWithChildren
+  '/how-it-works': typeof HowItWorksRoute
+  '/login': typeof LoginRoute
+  '/technology': typeof TechnologyRoute
+  '/authority/queue': typeof AuthorityQueueRoute
+  '/authority/slots': typeof AuthoritySlotsRoute
+  '/farmer/booking': typeof FarmerBookingRoute
+  '/farmer/centres': typeof FarmerCentresRoute
+  '/farmer/crop-check': typeof FarmerCropCheckRoute
+  '/farmer/notifications': typeof FarmerNotificationsRoute
+  '/farmer/payment': typeof FarmerPaymentRoute
+  '/farmer/phone-assistant': typeof FarmerPhoneAssistantRoute
+  '/farmer/profile': typeof FarmerProfileRoute
+  '/farmer/records': typeof FarmerRecordsRoute
+  '/farmer/voice': typeof FarmerVoiceRoute
+  '/authority/': typeof AuthorityIndexRoute
+  '/farmer/': typeof FarmerIndexRoute
+  '/farmer/book/$centreId': typeof FarmerBookCentreIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/how-it-works': typeof HowItWorksRoute
+  '/login': typeof LoginRoute
+  '/technology': typeof TechnologyRoute
+  '/authority/queue': typeof AuthorityQueueRoute
+  '/authority/slots': typeof AuthoritySlotsRoute
+  '/farmer/booking': typeof FarmerBookingRoute
+  '/farmer/centres': typeof FarmerCentresRoute
+  '/farmer/crop-check': typeof FarmerCropCheckRoute
+  '/farmer/notifications': typeof FarmerNotificationsRoute
+  '/farmer/payment': typeof FarmerPaymentRoute
+  '/farmer/phone-assistant': typeof FarmerPhoneAssistantRoute
+  '/farmer/profile': typeof FarmerProfileRoute
+  '/farmer/records': typeof FarmerRecordsRoute
+  '/farmer/voice': typeof FarmerVoiceRoute
+  '/authority': typeof AuthorityIndexRoute
+  '/farmer': typeof FarmerIndexRoute
+  '/farmer/book/$centreId': typeof FarmerBookCentreIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/authority': typeof AuthorityRouteWithChildren
+  '/farmer': typeof FarmerRouteWithChildren
+  '/how-it-works': typeof HowItWorksRoute
+  '/login': typeof LoginRoute
+  '/technology': typeof TechnologyRoute
+  '/authority/queue': typeof AuthorityQueueRoute
+  '/authority/slots': typeof AuthoritySlotsRoute
+  '/farmer/booking': typeof FarmerBookingRoute
+  '/farmer/centres': typeof FarmerCentresRoute
+  '/farmer/crop-check': typeof FarmerCropCheckRoute
+  '/farmer/notifications': typeof FarmerNotificationsRoute
+  '/farmer/payment': typeof FarmerPaymentRoute
+  '/farmer/phone-assistant': typeof FarmerPhoneAssistantRoute
+  '/farmer/profile': typeof FarmerProfileRoute
+  '/farmer/records': typeof FarmerRecordsRoute
+  '/farmer/voice': typeof FarmerVoiceRoute
+  '/authority/': typeof AuthorityIndexRoute
+  '/farmer/': typeof FarmerIndexRoute
+  '/farmer/book/$centreId': typeof FarmerBookCentreIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/authority'
+    | '/farmer'
+    | '/how-it-works'
+    | '/login'
+    | '/technology'
+    | '/authority/queue'
+    | '/authority/slots'
+    | '/farmer/booking'
+    | '/farmer/centres'
+    | '/farmer/crop-check'
+    | '/farmer/notifications'
+    | '/farmer/payment'
+    | '/farmer/phone-assistant'
+    | '/farmer/profile'
+    | '/farmer/records'
+    | '/farmer/voice'
+    | '/authority/'
+    | '/farmer/'
+    | '/farmer/book/$centreId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/how-it-works'
+    | '/login'
+    | '/technology'
+    | '/authority/queue'
+    | '/authority/slots'
+    | '/farmer/booking'
+    | '/farmer/centres'
+    | '/farmer/crop-check'
+    | '/farmer/notifications'
+    | '/farmer/payment'
+    | '/farmer/phone-assistant'
+    | '/farmer/profile'
+    | '/farmer/records'
+    | '/farmer/voice'
+    | '/authority'
+    | '/farmer'
+    | '/farmer/book/$centreId'
+  id:
+    | '__root__'
+    | '/'
+    | '/authority'
+    | '/farmer'
+    | '/how-it-works'
+    | '/login'
+    | '/technology'
+    | '/authority/queue'
+    | '/authority/slots'
+    | '/farmer/booking'
+    | '/farmer/centres'
+    | '/farmer/crop-check'
+    | '/farmer/notifications'
+    | '/farmer/payment'
+    | '/farmer/phone-assistant'
+    | '/farmer/profile'
+    | '/farmer/records'
+    | '/farmer/voice'
+    | '/authority/'
+    | '/farmer/'
+    | '/farmer/book/$centreId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthorityRoute: typeof AuthorityRouteWithChildren
+  FarmerRoute: typeof FarmerRouteWithChildren
+  HowItWorksRoute: typeof HowItWorksRoute
+  LoginRoute: typeof LoginRoute
+  TechnologyRoute: typeof TechnologyRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +281,196 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/authority': {
+      id: '/authority'
+      path: '/authority'
+      fullPath: '/authority'
+      preLoaderRoute: typeof AuthorityRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/farmer': {
+      id: '/farmer'
+      path: '/farmer'
+      fullPath: '/farmer'
+      preLoaderRoute: typeof FarmerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/how-it-works': {
+      id: '/how-it-works'
+      path: '/how-it-works'
+      fullPath: '/how-it-works'
+      preLoaderRoute: typeof HowItWorksRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/technology': {
+      id: '/technology'
+      path: '/technology'
+      fullPath: '/technology'
+      preLoaderRoute: typeof TechnologyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/authority/': {
+      id: '/authority/'
+      path: '/'
+      fullPath: '/authority/'
+      preLoaderRoute: typeof AuthorityIndexRouteImport
+      parentRoute: typeof AuthorityRoute
+    }
+    '/authority/queue': {
+      id: '/authority/queue'
+      path: '/queue'
+      fullPath: '/authority/queue'
+      preLoaderRoute: typeof AuthorityQueueRouteImport
+      parentRoute: typeof AuthorityRoute
+    }
+    '/authority/slots': {
+      id: '/authority/slots'
+      path: '/slots'
+      fullPath: '/authority/slots'
+      preLoaderRoute: typeof AuthoritySlotsRouteImport
+      parentRoute: typeof AuthorityRoute
+    }
+    '/farmer/': {
+      id: '/farmer/'
+      path: '/'
+      fullPath: '/farmer/'
+      preLoaderRoute: typeof FarmerIndexRouteImport
+      parentRoute: typeof FarmerRoute
+    }
+    '/farmer/booking': {
+      id: '/farmer/booking'
+      path: '/booking'
+      fullPath: '/farmer/booking'
+      preLoaderRoute: typeof FarmerBookingRouteImport
+      parentRoute: typeof FarmerRoute
+    }
+    '/farmer/centres': {
+      id: '/farmer/centres'
+      path: '/centres'
+      fullPath: '/farmer/centres'
+      preLoaderRoute: typeof FarmerCentresRouteImport
+      parentRoute: typeof FarmerRoute
+    }
+    '/farmer/crop-check': {
+      id: '/farmer/crop-check'
+      path: '/crop-check'
+      fullPath: '/farmer/crop-check'
+      preLoaderRoute: typeof FarmerCropCheckRouteImport
+      parentRoute: typeof FarmerRoute
+    }
+    '/farmer/notifications': {
+      id: '/farmer/notifications'
+      path: '/notifications'
+      fullPath: '/farmer/notifications'
+      preLoaderRoute: typeof FarmerNotificationsRouteImport
+      parentRoute: typeof FarmerRoute
+    }
+    '/farmer/payment': {
+      id: '/farmer/payment'
+      path: '/payment'
+      fullPath: '/farmer/payment'
+      preLoaderRoute: typeof FarmerPaymentRouteImport
+      parentRoute: typeof FarmerRoute
+    }
+    '/farmer/phone-assistant': {
+      id: '/farmer/phone-assistant'
+      path: '/phone-assistant'
+      fullPath: '/farmer/phone-assistant'
+      preLoaderRoute: typeof FarmerPhoneAssistantRouteImport
+      parentRoute: typeof FarmerRoute
+    }
+    '/farmer/profile': {
+      id: '/farmer/profile'
+      path: '/profile'
+      fullPath: '/farmer/profile'
+      preLoaderRoute: typeof FarmerProfileRouteImport
+      parentRoute: typeof FarmerRoute
+    }
+    '/farmer/records': {
+      id: '/farmer/records'
+      path: '/records'
+      fullPath: '/farmer/records'
+      preLoaderRoute: typeof FarmerRecordsRouteImport
+      parentRoute: typeof FarmerRoute
+    }
+    '/farmer/voice': {
+      id: '/farmer/voice'
+      path: '/voice'
+      fullPath: '/farmer/voice'
+      preLoaderRoute: typeof FarmerVoiceRouteImport
+      parentRoute: typeof FarmerRoute
+    }
+    '/farmer/book/$centreId': {
+      id: '/farmer/book/$centreId'
+      path: '/book/$centreId'
+      fullPath: '/farmer/book/$centreId'
+      preLoaderRoute: typeof FarmerBookCentreIdRouteImport
+      parentRoute: typeof FarmerRoute
+    }
   }
 }
 
+interface AuthorityRouteChildren {
+  AuthorityQueueRoute: typeof AuthorityQueueRoute
+  AuthoritySlotsRoute: typeof AuthoritySlotsRoute
+  AuthorityIndexRoute: typeof AuthorityIndexRoute
+}
+
+const AuthorityRouteChildren: AuthorityRouteChildren = {
+  AuthorityQueueRoute: AuthorityQueueRoute,
+  AuthoritySlotsRoute: AuthoritySlotsRoute,
+  AuthorityIndexRoute: AuthorityIndexRoute,
+}
+
+const AuthorityRouteWithChildren = AuthorityRoute._addFileChildren(
+  AuthorityRouteChildren,
+)
+
+interface FarmerRouteChildren {
+  FarmerBookingRoute: typeof FarmerBookingRoute
+  FarmerCentresRoute: typeof FarmerCentresRoute
+  FarmerCropCheckRoute: typeof FarmerCropCheckRoute
+  FarmerNotificationsRoute: typeof FarmerNotificationsRoute
+  FarmerPaymentRoute: typeof FarmerPaymentRoute
+  FarmerPhoneAssistantRoute: typeof FarmerPhoneAssistantRoute
+  FarmerProfileRoute: typeof FarmerProfileRoute
+  FarmerRecordsRoute: typeof FarmerRecordsRoute
+  FarmerVoiceRoute: typeof FarmerVoiceRoute
+  FarmerIndexRoute: typeof FarmerIndexRoute
+  FarmerBookCentreIdRoute: typeof FarmerBookCentreIdRoute
+}
+
+const FarmerRouteChildren: FarmerRouteChildren = {
+  FarmerBookingRoute: FarmerBookingRoute,
+  FarmerCentresRoute: FarmerCentresRoute,
+  FarmerCropCheckRoute: FarmerCropCheckRoute,
+  FarmerNotificationsRoute: FarmerNotificationsRoute,
+  FarmerPaymentRoute: FarmerPaymentRoute,
+  FarmerPhoneAssistantRoute: FarmerPhoneAssistantRoute,
+  FarmerProfileRoute: FarmerProfileRoute,
+  FarmerRecordsRoute: FarmerRecordsRoute,
+  FarmerVoiceRoute: FarmerVoiceRoute,
+  FarmerIndexRoute: FarmerIndexRoute,
+  FarmerBookCentreIdRoute: FarmerBookCentreIdRoute,
+}
+
+const FarmerRouteWithChildren =
+  FarmerRoute._addFileChildren(FarmerRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthorityRoute: AuthorityRouteWithChildren,
+  FarmerRoute: FarmerRouteWithChildren,
+  HowItWorksRoute: HowItWorksRoute,
+  LoginRoute: LoginRoute,
+  TechnologyRoute: TechnologyRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
