@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { ListOrdered, Search } from "lucide-react";
 import { Badge, Button, Card, EmptyState, SectionTitle, TextInput } from "@/components/ui-kit";
@@ -123,11 +123,11 @@ function AuthorityQueue() {
                           Call in
                         </Button>
                       ) : null}
-                      <Link to="/authority/booking/$bookingId" params={{ bookingId: b.id }}>
-                        <Button size="sm" variant="outline">
-                          Open
+                      {b.status === "booked" ? (
+                        <Button size="sm" variant="outline" onClick={() => setBookingStatus(b.id, "waiting")}>
+                          Add to queue
                         </Button>
-                      </Link>
+                      ) : null}
                     </div>
                   </td>
                 </tr>

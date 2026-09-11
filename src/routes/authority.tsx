@@ -30,8 +30,7 @@ function AuthorityLayout() {
   if (!state.profile) return <Navigate to="/login" search={{ role: "authority" }} />;
   if (state.profile.role !== "authority") return <Navigate to="/farmer" />;
 
-  const centre =
-    DEMO_CENTRES.find((c) => c.id === state.profile?.centre_id) ?? DEMO_CENTRES[0]!;
+  const centre = DEMO_CENTRES[0];
   const nav: NavItem[] = [
     { to: "/authority", label: t("Dashboard", "डैशबोर्ड"), icon: <LayoutDashboard className="size-4" /> },
     { to: "/authority/queue", label: t("Live queue", "लाइव कतार"), icon: <ListOrdered className="size-4" /> },

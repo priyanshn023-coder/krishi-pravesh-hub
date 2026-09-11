@@ -112,7 +112,7 @@ function Landing() {
                 at the mandi gate.
               </h1>
               <p className="mt-4 max-w-lg text-lg text-muted-foreground">
-                 KrishiPravesh tells you which centre to go to, books your time, gives you a
+                KrishiPravesh tells you which centre to go to, books your time, gives you a
                 token, and shows your turn as it moves — in simple words, on your phone.
               </p>
 
@@ -198,9 +198,9 @@ function Landing() {
 
       <footer className="mx-auto max-w-6xl px-4 pb-14">
         <div className="rounded-2xl border-2 border-accent/50 bg-accent-soft p-5 text-sm">
-          <p className="font-bold">What SmartMandi is not</p>
+          <p className="font-bold">What KrishiPravesh is not</p>
           <p className="mt-1 text-foreground/85">
-            SmartMandi is a coordination and decision-support platform. It does not replace
+            KrishiPravesh is a coordination and decision-support platform. It does not replace
             e-NAM or e-Uparjan, it does not issue official government receipts, the rates
             shown here are demo values, the payment flow moves no real money, and photo
             analysis of grain is only early guidance — the centre's physical test decides
@@ -208,7 +208,7 @@ function Landing() {
           </p>
           <div className="mt-4 flex gap-4 text-sm font-semibold">
             <Link to="/how-it-works" className="text-primary underline">
-              How SmartMandi works
+              How KrishiPravesh works
             </Link>
             <Link to="/technology" className="text-primary underline">
               Technology &amp; algorithms

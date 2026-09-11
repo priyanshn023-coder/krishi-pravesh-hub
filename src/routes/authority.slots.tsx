@@ -51,7 +51,7 @@ function AuthoritySlots() {
       start_time: form.start_time,
       end_time: form.end_time,
       capacity,
-      is_open: true,
+      status: "open",
     });
   }
 
@@ -130,17 +130,17 @@ function AuthoritySlots() {
                   <td className="px-4 py-3">{s.booked_count}</td>
                   <td className="px-4 py-3 font-semibold">{remaining}</td>
                   <td className="px-4 py-3">
-                    <Badge tone={s.is_open ? "success" : "danger"}>
-                      {s.is_open ? "Open" : "Closed"}
+                    <Badge tone={s.status === "open" ? "success" : "danger"}>
+                      {s.status === "open" ? "Open" : "Closed"}
                     </Badge>
                   </td>
                   <td className="px-4 py-3">
                     <Button
                       size="sm"
-                      variant={s.is_open ? "quiet" : "primary"}
-                      onClick={() => updateSlot(s.id, { is_open: !s.is_open })}
+                      variant={s.status === "open" ? "quiet" : "primary"}
+                      onClick={() => updateSlot(s.id, { status: s.status === "open" ? "closed" : "open" })}
                     >
-                      {s.is_open ? "Close" : "Open"}
+                      {s.status === "open" ? "Close" : "Open"}
                     </Button>
                   </td>
                 </tr>

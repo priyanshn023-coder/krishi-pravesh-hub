@@ -53,8 +53,8 @@ function AuthorityDashboard() {
         icon={<LayoutDashboard className="size-5" />}
         title={t("Operations overview", "संचालन अवलोकन")}
         subtitle={`${centre.name} · ${centre.city}, ${centre.district} · ${centre.active_counters} ${t("counters open", "काउंटर खुले")}`}
-        action={<Badge tone={centre.is_operating ? "success" : "danger"}>
-          {centre.is_operating ? t("Operating", "संचालित") : t("Closed", "बंद")}
+        action={<Badge tone={centre.active ? "success" : "danger"}>
+          {centre.active ? t("Operating", "संचालित") : t("Closed", "बंद")}
         </Badge>}
       />
 

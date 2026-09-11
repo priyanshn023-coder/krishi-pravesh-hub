@@ -521,6 +521,11 @@ export function useMyBooking(): Booking | null {
   return state.bookings.find((b) => b.id === state.myBookingId) ?? null;
 }
 
+/** Procurement centre used by the frontend-only authority demo. */
+export function useAuthorityCentre() {
+  return DEMO_CENTRES[0];
+}
+
 const STAGE_BY_STATUS: Record<BookingStatus, JourneyStage> = {
   booked: "Slot Booked",
   arrived: "Arrived at Gate",
