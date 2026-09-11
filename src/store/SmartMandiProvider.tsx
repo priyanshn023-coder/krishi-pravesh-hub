@@ -20,6 +20,7 @@ import type {
   NotificationEvent,
   Payment,
   Profile,
+  ProcurementCentre,
   QueueEvent,
   UserRole,
 } from "@/types/domain";
@@ -522,8 +523,8 @@ export function useMyBooking(): Booking | null {
 }
 
 /** Procurement centre used by the frontend-only authority demo. */
-export function useAuthorityCentre() {
-  return DEMO_CENTRES[0];
+export function useAuthorityCentre(): ProcurementCentre {
+  return MAIN_CENTRE;
 }
 
 const STAGE_BY_STATUS: Record<BookingStatus, JourneyStage> = {
