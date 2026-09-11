@@ -3,7 +3,7 @@ import { JOURNEY_STAGES, type JourneyStage } from "@/types/domain";
 import { cn } from "@/lib/utils";
 
 const PLAIN: Record<JourneyStage, string> = {
-  Registration: "You joined SmartMandi",
+  Registration: "You joined KrishiPravesh",
   "Centre Selected": "You chose a centre",
   "Slot Booked": "Your time is booked",
   "Token Generated": "Token and QR ready",

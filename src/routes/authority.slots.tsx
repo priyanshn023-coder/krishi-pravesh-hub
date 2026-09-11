@@ -7,6 +7,16 @@ import { friendlyDate } from "@/lib/format";
 import { WHEAT } from "@/lib/demoData";
 
 export const Route = createFileRoute("/authority/slots")({
+  head: () => ({
+    meta: [
+      { title: "Slots — KrishiPravesh Authority" },
+      { name: "description", content: "Manage procurement slots and daily centre capacity." },
+      { property: "og:title", content: "Slots — KrishiPravesh Authority" },
+      { property: "og:description", content: "Manage open slots and capacity for the procurement centre." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
   component: AuthoritySlots,
 });
 

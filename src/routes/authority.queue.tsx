@@ -8,6 +8,16 @@ import { BOOKING_STATUS_LABEL, BOOKING_STATUS_TONE, dateTimeOf } from "@/lib/for
 import type { BookingStatus } from "@/types/domain";
 
 export const Route = createFileRoute("/authority/queue")({
+  head: () => ({
+    meta: [
+      { title: "Live queue — KrishiPravesh Authority" },
+      { name: "description", content: "Review and manage the live procurement centre queue." },
+      { property: "og:title", content: "Live queue — KrishiPravesh Authority" },
+      { property: "og:description", content: "Review farmer arrivals and queue progress." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
   component: AuthorityQueue,
 });
 

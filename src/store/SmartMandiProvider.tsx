@@ -148,7 +148,7 @@ export function SmartMandiProvider({ children }: { children: ReactNode }) {
         notify({
           recipient_role: "farmer",
           event: "registration",
-          title: "Welcome to SmartMandi",
+          title: "Welcome to KrishiPravesh",
           body: `You are signed in as ${profile.full_name}.`,
         });
       }
